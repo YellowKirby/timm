@@ -57,7 +57,7 @@
 
 <p>Feel free to run them yourself (download the repo and then <code>npm install &amp;&amp; npm run benchmarks</code>). These are my results on a Windows machine for 200k iterations:</p>
 
-<p><img src="https://github.com/guigrpa/timm/blob/master/docs/benchmarks-win7-20160218.png" alt="Benchmarks"></p>
+<p><img src="https://github.com/guigrpa/timm/blob/master/docs/benchmarks-win7-20160218.png?raw=true" alt="Benchmarks"></p>
 
 <p>Reads are roughly on par with native objects/arrays and seamless-immutable, and faster than ImmutableJS (the deeper, the faster). Writes are much slower than in-place edits, as expected, but are much faster than seamless-immutable (even in production mode). Write performance is somewhat comparable to ImmutableJS's, at least for deep writes. Shallower writes are slower, but in the same order of magnitude.</p>
 
