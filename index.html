@@ -31,14 +31,176 @@
 </code></pre>
 
 <h2>
-<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h2>
+<a id="motivation-and-benchmarks" class="anchor" href="#motivation-and-benchmarks" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Motivation and benchmarks</h2>
 
-<p>See <a href="docs/src/index.html">here</a>.</p>
+<p>TBW</p>
 
 <h2>
-<a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h2>
 
-<p>MIT © <a href="https://github.com/guigrpa">Guillermo Grau Panea</a></p>
+<h3>
+<a id="arrays" class="anchor" href="#arrays" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Arrays</h3>
+
+<h4>
+<a id="addlast" class="anchor" href="#addlast" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>addLast()</h4>
+
+<p>Returns a new array with an appended item.</p>
+
+<p>Usage: <code>addLast(array: Array, val: any): Array</code></p>
+
+<div class="highlight highlight-source-js"><pre>arr <span class="pl-k">=</span> [<span class="pl-s"><span class="pl-pds">'</span>a<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>b<span class="pl-pds">'</span></span>]
+arr2 <span class="pl-k">=</span> <span class="pl-en">addLast</span>(arr, <span class="pl-s"><span class="pl-pds">'</span>c<span class="pl-pds">'</span></span>)
+<span class="pl-c">// [ 'a', 'b', 'c' ]</span>
+arr2 <span class="pl-k">===</span> arr
+<span class="pl-c">// false</span></pre></div>
+
+<h4>
+<a id="addfirst" class="anchor" href="#addfirst" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>addFirst()</h4>
+
+<p>Returns a new array with a prepended item.</p>
+
+<p>Usage: <code>addFirst(array: Array, val: any): Array</code></p>
+
+<div class="highlight highlight-source-js"><pre>arr <span class="pl-k">=</span> [<span class="pl-s"><span class="pl-pds">'</span>a<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>b<span class="pl-pds">'</span></span>]
+arr2 <span class="pl-k">=</span> <span class="pl-en">addFirst</span>(arr, <span class="pl-s"><span class="pl-pds">'</span>c<span class="pl-pds">'</span></span>)
+<span class="pl-c">// [ 'c', 'a', 'b' ]</span>
+arr2 <span class="pl-k">===</span> arr
+<span class="pl-c">// false</span></pre></div>
+
+<h4>
+<a id="removeat" class="anchor" href="#removeat" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>removeAt()</h4>
+
+<p>Returns a new array obtained by removing an item at
+a specified index.</p>
+
+<p>Usage: <code>removeAt(array: Array, idx: number): Array</code></p>
+
+<div class="highlight highlight-source-js"><pre>arr <span class="pl-k">=</span> [<span class="pl-s"><span class="pl-pds">'</span>a<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>b<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>c<span class="pl-pds">'</span></span>]
+arr2 <span class="pl-k">=</span> <span class="pl-en">removeAt</span>(arr, <span class="pl-c1">1</span>)
+<span class="pl-c">// [ 'a', 'c' ]</span>
+arr2 <span class="pl-k">===</span> arr
+<span class="pl-c">// false</span></pre></div>
+
+<h4>
+<a id="replaceat" class="anchor" href="#replaceat" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>replaceAt()</h4>
+
+<p>Returns a new array obtained by replacing an item at
+a specified index. If the provided item is the same
+(<em>referentially equal to</em>) the previous item at that position,
+the original array is returned.</p>
+
+<p>Usage: <code>replaceAt(array: Array, idx: number, newItem: any): Array</code></p>
+
+<div class="highlight highlight-source-js"><pre>arr <span class="pl-k">=</span> [<span class="pl-s"><span class="pl-pds">'</span>a<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>b<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>c<span class="pl-pds">'</span></span>]
+arr2 <span class="pl-k">=</span> <span class="pl-en">replaceAt</span>(arr, <span class="pl-c1">1</span>, <span class="pl-s"><span class="pl-pds">'</span>d<span class="pl-pds">'</span></span>)
+<span class="pl-c">// [ 'a', 'd', 'c' ]</span>
+arr2 <span class="pl-k">===</span> arr
+<span class="pl-c">// false</span>
+<span class="pl-en">replaceAt</span>(arr, <span class="pl-c1">1</span>, <span class="pl-s"><span class="pl-pds">'</span>b<span class="pl-pds">'</span></span>) <span class="pl-k">===</span> arr
+<span class="pl-c">// true</span></pre></div>
+
+<h3>
+<a id="objects" class="anchor" href="#objects" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Objects</h3>
+
+<h4>
+<a id="set" class="anchor" href="#set" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>set()</h4>
+
+<p>Returns a new object with a modified attribute.
+If the provided value is the same (<em>referentially equal to</em>)
+the previous value, the original object is returned.</p>
+
+<p>Usage: <code>set(obj: Object, key: string, val: any): Object</code></p>
+
+<div class="highlight highlight-source-js"><pre>obj <span class="pl-k">=</span> {a<span class="pl-k">:</span> <span class="pl-c1">1</span>, b<span class="pl-k">:</span> <span class="pl-c1">2</span>, c<span class="pl-k">:</span> <span class="pl-c1">3</span>}
+obj2 <span class="pl-k">=</span> <span class="pl-en">set</span>(obj, <span class="pl-s"><span class="pl-pds">'</span>b<span class="pl-pds">'</span></span>, <span class="pl-c1">5</span>)
+<span class="pl-c">// { a: 1, b: 5, c: 3 }</span>
+obj2 <span class="pl-k">===</span> obj
+<span class="pl-c">// false</span>
+<span class="pl-en">set</span>(obj, <span class="pl-s"><span class="pl-pds">'</span>b<span class="pl-pds">'</span></span>, <span class="pl-c1">2</span>) <span class="pl-k">===</span> obj
+<span class="pl-c">// true</span></pre></div>
+
+<h4>
+<a id="setin" class="anchor" href="#setin" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>setIn()</h4>
+
+<p>Returns a new object with a modified <strong>nested</strong> attribute.</p>
+
+<p>Usage: <code>setIn(obj: Object, path: Array&lt;string&gt;, val: any): Object</code>
+If the provided value is the same (<em>referentially equal to</em>)
+the previous value, the original object is returned.</p>
+
+<div class="highlight highlight-source-js"><pre>obj <span class="pl-k">=</span> {a<span class="pl-k">:</span> <span class="pl-c1">1</span>, b<span class="pl-k">:</span> <span class="pl-c1">2</span>, d<span class="pl-k">:</span> {d1<span class="pl-k">:</span> <span class="pl-c1">3</span>, d2<span class="pl-k">:</span> <span class="pl-c1">4</span>}, e<span class="pl-k">:</span> {e1<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>foo<span class="pl-pds">'</span></span>, e2<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>bar<span class="pl-pds">'</span></span>}}
+obj2 <span class="pl-k">=</span> <span class="pl-en">setIn</span>(obj, [<span class="pl-s"><span class="pl-pds">'</span>d<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>d1<span class="pl-pds">'</span></span>], <span class="pl-c1">4</span>)
+<span class="pl-c">// { a: 1, b: 2, d: { d1: 4, d2: 4 }, e: { e1: 'foo', e2: 'bar' } }</span>
+obj2 <span class="pl-k">===</span> obj
+<span class="pl-c">// false</span>
+<span class="pl-smi">obj2</span>.<span class="pl-smi">d</span> <span class="pl-k">===</span> <span class="pl-smi">obj</span>.<span class="pl-smi">d</span>
+<span class="pl-c">// false</span>
+<span class="pl-smi">obj2</span>.<span class="pl-smi">e</span> <span class="pl-k">===</span> <span class="pl-smi">obj</span>.<span class="pl-smi">e</span>
+<span class="pl-c">// true</span>
+obj3 <span class="pl-k">=</span> <span class="pl-en">setIn</span>(obj, [<span class="pl-s"><span class="pl-pds">'</span>d<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>d1<span class="pl-pds">'</span></span>], <span class="pl-c1">3</span>)
+<span class="pl-c">// { a: 1, b: 2, d: { d1: 3, d2: 4 }, e: { e1: 'foo', e2: 'bar' } }</span>
+obj3 <span class="pl-k">===</span> obj
+<span class="pl-c">// true</span>
+<span class="pl-smi">obj3</span>.<span class="pl-smi">d</span> <span class="pl-k">===</span> <span class="pl-smi">obj</span>.<span class="pl-smi">d</span>
+<span class="pl-c">// true</span>
+<span class="pl-smi">obj3</span>.<span class="pl-smi">e</span> <span class="pl-k">===</span> <span class="pl-smi">obj</span>.<span class="pl-smi">e</span>
+<span class="pl-c">// true</span></pre></div>
+
+<h4>
+<a id="merge" class="anchor" href="#merge" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>merge()</h4>
+
+<p>Returns a new object built as follows: the overlapping keys from the
+second one overwrite the corresponding entries from the first one.
+Similar to <code>Object.assign()</code>, but immutable.</p>
+
+<p>Usage: <code>merge(obj1: Object, obj2: Object): Object</code></p>
+
+<p>The unmodified <code>obj1</code> is returned if <code>obj2</code> does not <em>provide something
+new to</em> <code>obj1</code>, i.e. if either of the following
+conditions are true:</p>
+
+<ul>
+<li>
+<code>obj2</code> is <code>null</code> or <code>undefined</code>
+</li>
+<li>
+<code>obj2</code> is an object, but it is empty</li>
+<li>All attributes of <code>obj2</code> are referentially equal to the
+corresponding attributes of <code>obj</code>
+</li>
+</ul>
+
+<h4>
+<a id="adddefaults" class="anchor" href="#adddefaults" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>addDefaults()</h4>
+
+<p>Returns a new object built as follows: undefined keys in the first one
+are filled in with the corresponding values from the second one.
+Similar to underscore's <code>defaults()</code> function, but immutable.</p>
+
+<p>Usage: <code>merge(obj: Object, defaults: Object): Object</code></p>
+
+<h2>
+<a id="mit-license" class="anchor" href="#mit-license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>MIT license</h2>
+
+<p>Copyright (c) <a href="https://github.com/guigrpa">Guillermo Grau Panea</a> 2016</p>
+
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+
+<p>The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.</p>
+
+<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</p>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/guigrpa/timm">Timm</a> is maintained by <a href="https://github.com/guigrpa">guigrpa</a>.</span>
