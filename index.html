@@ -31,9 +31,35 @@
 </code></pre>
 
 <h2>
-<a id="motivation-and-benchmarks" class="anchor" href="#motivation-and-benchmarks" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Motivation and benchmarks</h2>
+<a id="motivation" class="anchor" href="#motivation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Motivation</h2>
 
-<p>TBW</p>
+<p>I know, I know... the world does not need yet another immutability library, especially with the likes of <a href="http://facebook.github.io/immutable-js/">ImmutableJS</a> and <a href="https://github.com/rtfeldman/seamless-immutable">seamless-immutable</a> around. </p>
+
+<p>And yet... I felt the need, at least just to cover my limited needs. ImmutableJS is a solid, comprehensive and highly-performant solution, but this power comes at a price: mixing up ImmutableJS's Maps and Lists with your plain objects can cause some friction, and reading those objects (in my case, more often than writing them) is not that convenient.</p>
+
+<p>On the other side, seamless-immutable solves the "friction" problem by using plain objects and arrays, but seems to have some performance issues (at least in my benchmarks, see below).</p>
+
+<p>Timm's approach: use plain objects and arrays and provide simple mutation functions that will probably not handle all edge cases. It is by no means a complete solution, but it covers 100% of my use cases and maybe 90% of yours, too. Suggestions are welcome!</p>
+
+<h2>
+<a id="benchmarks" class="anchor" href="#benchmarks" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Benchmarks</h2>
+
+<p>I prepared an initial benchmarking tool comparing read/write speeds in four cases:</p>
+
+<ul>
+<li>In-place editing (mutable)</li>
+<li>ImmutableJS</li>
+<li>Seamless-immutable</li>
+<li>Timm</li>
+</ul>
+
+<p>All four solutions are first verified for consistency (the mutable solution obviously does not pass all tests) and then benchmarked. Benchmarks cover reading and writing object attributes at different nesting levels (root level, 2 levels and 5 levels deep). They do not cover arrays for the moment (coming up!).</p>
+
+<p>Feel free to run them yourself (download the repo and then <code>npm install &amp;&amp; npm run benchmarks</code>). These are my results on a Windows machine for 200k iterations:</p>
+
+<p><img src="https://github.com/guigrpa/timm/blob/master/docs/benchmarks-win7-20160218.png" alt="Benchmarks"></p>
+
+<p>Reads are roughly on par with native objects/arrays and seamless-immutable, and faster than ImmutableJS (the deeper, the faster). Writes are much slower than in-place edits, as expected, but are much faster than seamless-immutable (even in production mode). Write performance is somewhat comparable to ImmutableJS's, at least for deep writes. Shallower writes are slower, but in the same order of magnitude.</p>
 
 <h2>
 <a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h2>
