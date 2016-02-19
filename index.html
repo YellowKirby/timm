@@ -207,6 +207,8 @@ Similar to <code>Object.assign()</code>, but immutable.</p>
 
 <p>Usage: <code>merge(obj1: Object, obj2: Object): Object</code></p>
 
+<p>Variadic: <code>merge(obj1: Object, ...objects: Object[]): Object</code></p>
+
 <p>The unmodified <code>obj1</code> is returned if <code>obj2</code> does not <em>provide something
 new to</em> <code>obj1</code>, i.e. if either of the following
 conditions are true:</p>
@@ -241,6 +243,8 @@ are filled in with the corresponding values from the second one
 (even if they are <code>null</code>).</p>
 
 <p>Usage: <code>addDefaults(obj: Object, defaults: Object): Object</code></p>
+
+<p>Variadic: <code>addDefaults(obj: Object, ...defaultObjects: Object[]): Object</code></p>
 
 <div class="highlight highlight-source-js"><pre>obj1 <span class="pl-k">=</span> {a<span class="pl-k">:</span> <span class="pl-c1">1</span>, b<span class="pl-k">:</span> <span class="pl-c1">2</span>, c<span class="pl-k">:</span> <span class="pl-c1">3</span>}
 obj2 <span class="pl-k">=</span> {c<span class="pl-k">:</span> <span class="pl-c1">4</span>, d<span class="pl-k">:</span> <span class="pl-c1">5</span>, e<span class="pl-k">:</span> <span class="pl-c1">null</span>}
