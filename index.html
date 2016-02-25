@@ -90,28 +90,48 @@
 <h4>
 <a id="addlast" class="anchor" href="#addlast" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>addLast()</h4>
 
-<p>Returns a new array with an appended item.</p>
+<p>Returns a new array with an appended item or items.</p>
 
-<p>Usage: <code>addLast(array: Array, val: any): Array</code></p>
+<p>Usage: <code>addLast(array: Array, val: Array | any): Array</code></p>
 
 <div class="highlight highlight-source-js"><pre>arr <span class="pl-k">=</span> [<span class="pl-s"><span class="pl-pds">'</span>a<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>b<span class="pl-pds">'</span></span>]
 arr2 <span class="pl-k">=</span> <span class="pl-en">addLast</span>(arr, <span class="pl-s"><span class="pl-pds">'</span>c<span class="pl-pds">'</span></span>)
 <span class="pl-c">// ['a', 'b', 'c']</span>
 arr2 <span class="pl-k">===</span> arr
-<span class="pl-c">// false</span></pre></div>
+<span class="pl-c">// false</span>
+arr3 <span class="pl-k">=</span> <span class="pl-en">addLast</span>(arr, [<span class="pl-s"><span class="pl-pds">'</span>c<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>d<span class="pl-pds">'</span></span>])
+<span class="pl-c">// ['a', 'b', 'c', 'd']</span></pre></div>
 
 <h4>
 <a id="addfirst" class="anchor" href="#addfirst" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>addFirst()</h4>
 
-<p>Returns a new array with a prepended item.</p>
+<p>Returns a new array with a prepended item or items.</p>
 
-<p>Usage: <code>addFirst(array: Array, val: any): Array</code></p>
+<p>Usage: <code>addFirst(array: Array, val: Array | any): Array</code></p>
 
 <div class="highlight highlight-source-js"><pre>arr <span class="pl-k">=</span> [<span class="pl-s"><span class="pl-pds">'</span>a<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>b<span class="pl-pds">'</span></span>]
 arr2 <span class="pl-k">=</span> <span class="pl-en">addFirst</span>(arr, <span class="pl-s"><span class="pl-pds">'</span>c<span class="pl-pds">'</span></span>)
 <span class="pl-c">// ['c', 'a', 'b']</span>
 arr2 <span class="pl-k">===</span> arr
-<span class="pl-c">// false</span></pre></div>
+<span class="pl-c">// false</span>
+arr3 <span class="pl-k">=</span> <span class="pl-en">addFirst</span>(arr, [<span class="pl-s"><span class="pl-pds">'</span>c<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>d<span class="pl-pds">'</span></span>])
+<span class="pl-c">// ['c', 'd', 'a', 'b']</span></pre></div>
+
+<h4>
+<a id="insert" class="anchor" href="#insert" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>insert()</h4>
+
+<p>Returns a new array obtained by inserting an item or items
+at a specified index.</p>
+
+<p>Usage: <code>insert(array: Array, idx: number, val: Array | any): Array</code></p>
+
+<div class="highlight highlight-source-js"><pre>arr <span class="pl-k">=</span> [<span class="pl-s"><span class="pl-pds">'</span>a<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>b<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>c<span class="pl-pds">'</span></span>]
+arr2 <span class="pl-k">=</span> <span class="pl-en">insert</span>(arr, <span class="pl-c1">1</span>, <span class="pl-s"><span class="pl-pds">'</span>d<span class="pl-pds">'</span></span>)
+<span class="pl-c">// ['a', 'd', 'b', 'c']</span>
+arr2 <span class="pl-k">===</span> arr
+<span class="pl-c">// false</span>
+<span class="pl-en">insert</span>(arr, <span class="pl-c1">1</span>, [<span class="pl-s"><span class="pl-pds">'</span>d<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>e<span class="pl-pds">'</span></span>])
+<span class="pl-c">// ['a', 'd', 'e', 'b', 'c']</span></pre></div>
 
 <h4>
 <a id="removeat" class="anchor" href="#removeat" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>removeAt()</h4>
