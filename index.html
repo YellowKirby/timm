@@ -42,6 +42,8 @@
 
 <p>Timm's approach: use plain objects and arrays and provide simple mutation functions that will probably not handle all edge cases. It is by no means a complete solution, but it covers 100% of my use cases and maybe 90% of yours, too. Suggestions are welcome!</p>
 
+<p><strong>Important notice:</strong> Timm <em>does not</em> freeze the objects it provides. In other words, it doesn't protect you against inadvertently modifying them in your code. I considered deeply freezing all objects with <code>Object.freeze()</code>, but it is really slow. Then I considered doing this only in development, but then modifying frozen objects will silently fail in development (unless you <code>use strict</code> in your code), and –worse still– succeed in production. Not good. In conclusion, <strong>be careful</strong> (or send me any suggestion!).</p>
+
 <h2>
 <a id="benchmarks" class="anchor" href="#benchmarks" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Benchmarks</h2>
 
@@ -168,7 +170,22 @@ arr2 <span class="pl-k">===</span> arr
 <span class="pl-c">// true</span></pre></div>
 
 <h3>
-<a id="objects" class="anchor" href="#objects" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Objects</h3>
+<a id="collections-objects-and-arrays" class="anchor" href="#collections-objects-and-arrays" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Collections (objects and arrays)</h3>
+
+<h4>
+<a id="getin" class="anchor" href="#getin" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>getIn()</h4>
+
+<p>Returns a value from an object at a given path. Works with
+nested arrays and objects. If the path does not exist, it returns
+<code>undefined</code>.</p>
+
+<p>Usage: <code>getIn(obj: Object, path: Array&lt;string&gt;): any</code></p>
+
+<div class="highlight highlight-source-js"><pre>obj <span class="pl-k">=</span> {a<span class="pl-k">:</span> <span class="pl-c1">1</span>, b<span class="pl-k">:</span> <span class="pl-c1">2</span>, d<span class="pl-k">:</span> {d1<span class="pl-k">:</span> <span class="pl-c1">3</span>, d2<span class="pl-k">:</span> <span class="pl-c1">4</span>}, e<span class="pl-k">:</span> [<span class="pl-s"><span class="pl-pds">'</span>a<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>b<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>c<span class="pl-pds">'</span></span>]}
+<span class="pl-en">getIn</span>(obj, [<span class="pl-s"><span class="pl-pds">'</span>d<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>d1<span class="pl-pds">'</span></span>])
+<span class="pl-c">// 3</span>
+<span class="pl-en">getIn</span>(obj, [<span class="pl-s"><span class="pl-pds">'</span>e<span class="pl-pds">'</span></span>, <span class="pl-c1">1</span>])
+<span class="pl-c">// 'b'</span></pre></div>
 
 <h4>
 <a id="set" class="anchor" href="#set" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>set()</h4>
@@ -194,9 +211,16 @@ obj2 <span class="pl-k">===</span> obj
 
 <p>Returns a new object with a modified <strong>nested</strong> attribute.</p>
 
-<p>Usage: <code>setIn(obj: Object, path: Array&lt;string&gt;, val: any): Object</code>
-If the provided value is the same (<em>referentially equal to</em>)
-the previous value, the original object is returned.</p>
+<p>Notes:</p>
+
+<ul>
+<li><p>If the provided value is the same (<em>referentially equal to</em>)
+the previous value, the original object is returned.</p></li>
+<li><p>If the path does not exist, it will be created before setting
+the new value.</p></li>
+</ul>
+
+<p>Usage: <code>setIn(obj: Object, path: Array&lt;string&gt;, val: any): Object</code></p>
 
 <div class="highlight highlight-source-js"><pre>obj <span class="pl-k">=</span> {a<span class="pl-k">:</span> <span class="pl-c1">1</span>, b<span class="pl-k">:</span> <span class="pl-c1">2</span>, d<span class="pl-k">:</span> {d1<span class="pl-k">:</span> <span class="pl-c1">3</span>, d2<span class="pl-k">:</span> <span class="pl-c1">4</span>}, e<span class="pl-k">:</span> {e1<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>foo<span class="pl-pds">'</span></span>, e2<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>bar<span class="pl-pds">'</span></span>}}
 obj2 <span class="pl-k">=</span> <span class="pl-en">setIn</span>(obj, [<span class="pl-s"><span class="pl-pds">'</span>d<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>d1<span class="pl-pds">'</span></span>], <span class="pl-c1">4</span>)
@@ -216,6 +240,32 @@ obj3 <span class="pl-k">===</span> obj
 <span class="pl-smi">obj3</span>.<span class="pl-smi">d</span> <span class="pl-k">===</span> <span class="pl-smi">obj</span>.<span class="pl-smi">d</span>
 <span class="pl-c">// true</span>
 <span class="pl-smi">obj3</span>.<span class="pl-smi">e</span> <span class="pl-k">===</span> <span class="pl-smi">obj</span>.<span class="pl-smi">e</span>
+<span class="pl-c">// true</span>
+
+<span class="pl-c">// ... unknown paths create intermediate keys:</span>
+<span class="pl-en">setIn</span>({a<span class="pl-k">:</span> <span class="pl-c1">3</span>}, [<span class="pl-s"><span class="pl-pds">'</span>unknown<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>path<span class="pl-pds">'</span></span>], <span class="pl-c1">4</span>)
+<span class="pl-c">// {a: 3, unknown: {path: 4}}</span></pre></div>
+
+<h4>
+<a id="updatein" class="anchor" href="#updatein" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>updateIn()</h4>
+
+<p>Returns a new object with a modified <strong>nested</strong> attribute,
+calculated via a user-provided callback based on the current value.
+If the calculated value is the same (<em>referentially equal to</em>)
+the previous value, the original object is returned.</p>
+
+<p>Usage: <code>updateIn(obj: Object, path: Array&lt;string&gt;, fnUpdate: (prevValue: any) =&gt; any): Object</code></p>
+
+<div class="highlight highlight-source-js"><pre>obj <span class="pl-k">=</span> {a<span class="pl-k">:</span> <span class="pl-c1">1</span>, d<span class="pl-k">:</span> {d1<span class="pl-k">:</span> <span class="pl-c1">3</span>, d2<span class="pl-k">:</span> <span class="pl-c1">4</span>}}
+obj2 <span class="pl-k">=</span> <span class="pl-en">updateIn</span>(obj, [<span class="pl-s"><span class="pl-pds">'</span>d<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>d1<span class="pl-pds">'</span></span>], <span class="pl-k">function</span>(<span class="pl-smi">val</span>){<span class="pl-k">return</span> val <span class="pl-k">+</span> <span class="pl-c1">1</span>})
+<span class="pl-c">// {a: 1, d: {d1: 4, d2: 4}}</span>
+obj2 <span class="pl-k">===</span> obj
+<span class="pl-c">// false</span>
+
+<span class="pl-c">// ... but the same object is returned if there are no changes:</span>
+obj3 <span class="pl-k">=</span> <span class="pl-en">updateIn</span>(obj, [<span class="pl-s"><span class="pl-pds">'</span>d<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>d1<span class="pl-pds">'</span></span>], <span class="pl-k">function</span>(<span class="pl-smi">val</span>){<span class="pl-k">return</span> val})
+<span class="pl-c">// {a: 1, d: {d1: 3, d2: 4}}</span>
+obj3 <span class="pl-k">===</span> obj
 <span class="pl-c">// true</span></pre></div>
 
 <h4>
@@ -253,6 +303,26 @@ obj3 <span class="pl-k">===</span> obj1
 
 <span class="pl-c">// ... but the same object is returned if there are no changes:</span>
 <span class="pl-en">merge</span>(obj1, {c<span class="pl-k">:</span> <span class="pl-c1">3</span>}) <span class="pl-k">===</span> obj1
+<span class="pl-c">// true</span></pre></div>
+
+<h4>
+<a id="mergein" class="anchor" href="#mergein" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>mergeIn()</h4>
+
+<p>Similar to <code>merge()</code>, but merging the value at a given nested path.</p>
+
+<p>Usage: <code>mergeIn(obj1: Object, path: Array&lt;string&gt;, obj2: Object): Object</code></p>
+
+<p>Variadic: <code>mergeIn(obj1: Object, path: Array&lt;string&gt;, ...objects: Object[]): Object</code></p>
+
+<div class="highlight highlight-source-js"><pre>obj1 <span class="pl-k">=</span> {a<span class="pl-k">:</span> <span class="pl-c1">1</span>, d<span class="pl-k">:</span> {b<span class="pl-k">:</span> {d1<span class="pl-k">:</span> <span class="pl-c1">3</span>, d2<span class="pl-k">:</span> <span class="pl-c1">4</span>}}}
+obj2 <span class="pl-k">=</span> {d3<span class="pl-k">:</span> <span class="pl-c1">5</span>}
+obj2 <span class="pl-k">=</span> <span class="pl-en">mergeIn</span>(obj1, [<span class="pl-s"><span class="pl-pds">'</span>d<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>b<span class="pl-pds">'</span></span>], obj2)
+<span class="pl-c">// {a: 1, d: {b: {d1: 3, d2: 4, d3: 5}}}</span>
+obj3 <span class="pl-k">===</span> obj1
+<span class="pl-c">// false</span>
+
+<span class="pl-c">// ... but the same object is returned if there are no changes:</span>
+<span class="pl-en">mergeIn</span>(obj1, [<span class="pl-s"><span class="pl-pds">'</span>d<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>b<span class="pl-pds">'</span></span>], {d2<span class="pl-k">:</span> <span class="pl-c1">4</span>}) <span class="pl-k">===</span> obj1
 <span class="pl-c">// true</span></pre></div>
 
 <h4>
