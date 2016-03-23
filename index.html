@@ -86,10 +86,6 @@
 <h2>
 <a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h2>
 
-<p>Timm
- (c) Guillermo Grau Panea 2016
- License: MIT</p>
-
 <h3>
 <a id="arrays" class="anchor" href="#arrays" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Arrays</h3>
 
@@ -263,7 +259,8 @@ calculated via a user-provided callback based on the current value.
 If the calculated value is the same (<em>referentially equal to</em>)
 the previous value, the original object is returned.</p>
 
-<p>Usage: <code>updateIn(obj: ArrayOrObject, path: Array&lt;Key&gt;, fnUpdate: (prevValue: any) =&gt; any): ArrayOrObject</code></p>
+<p>Usage: <code>updateIn(obj: ArrayOrObject, path: Array&lt;Key&gt;,
+fnUpdate: (prevValue: any) =&gt; any): ArrayOrObject</code></p>
 
 <div class="highlight highlight-source-js"><pre>obj <span class="pl-k">=</span> {a<span class="pl-k">:</span> <span class="pl-c1">1</span>, d<span class="pl-k">:</span> {d1<span class="pl-k">:</span> <span class="pl-c1">3</span>, d2<span class="pl-k">:</span> <span class="pl-c1">4</span>}}
 obj2 <span class="pl-k">=</span> <span class="pl-en">updateIn</span>(obj, [<span class="pl-s"><span class="pl-pds">'</span>d<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>d1<span class="pl-pds">'</span></span>], <span class="pl-k">function</span>(<span class="pl-smi">val</span>){<span class="pl-k">return</span> val <span class="pl-k">+</span> <span class="pl-c1">1</span>})
@@ -326,7 +323,8 @@ obj3 <span class="pl-k">===</span> obj1
 
 <ul>
 <li><code>mergeIn(obj1: ArrayOrObject, path: Array&lt;Key&gt;, obj2: ArrayOrObject): ArrayOrObject</code></li>
-<li><code>mergeIn(obj1: ArrayOrObject, path: Array&lt;Key&gt;, ...objects: Array&lt;?ArrayOrObject&gt;): ArrayOrObject</code></li>
+<li><code>mergeIn(obj1: ArrayOrObject, path: Array&lt;Key&gt;,
+...objects: Array&lt;?ArrayOrObject&gt;): ArrayOrObject</code></li>
 </ul>
 
 <div class="highlight highlight-source-js"><pre>obj1 <span class="pl-k">=</span> {a<span class="pl-k">:</span> <span class="pl-c1">1</span>, d<span class="pl-k">:</span> {b<span class="pl-k">:</span> {d1<span class="pl-k">:</span> <span class="pl-c1">3</span>, d2<span class="pl-k">:</span> <span class="pl-c1">4</span>}}}
