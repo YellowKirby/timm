@@ -91,7 +91,7 @@
 <span class="pl-k">const</span> <span class="pl-c1">obj</span> <span class="pl-k">=</span> <span class="pl-smi">timm</span>.<span class="pl-en">merge</span>({a<span class="pl-k">:</span> <span class="pl-c1">2</span>}, {b<span class="pl-k">:</span> <span class="pl-c1">3</span>});
 
 <span class="pl-c">// Consume the native ES6 module (requires bundling)</span>
-<span class="pl-k">import</span> {<span class="pl-smi">merge</span>} <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>timm/dist/timm_es6<span class="pl-pds">'</span></span>;
+<span class="pl-k">import</span> {<span class="pl-smi">merge</span>} <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>timm/lib/timm_es6<span class="pl-pds">'</span></span>;
 <span class="pl-k">const</span> <span class="pl-c1">obj</span> <span class="pl-k">=</span> <span class="pl-en">merge</span>({a<span class="pl-k">:</span> <span class="pl-c1">2</span>}, {b<span class="pl-k">:</span> <span class="pl-c1">3</span>});</pre></div>
 
 <p><em>Note: you can use the ES6 module version with Webpack 2 and its tree-shaking feature to get really small bundles, including just the Timm functions you use. Make sure you disable <code>babel-plugin-transform-es2015-modules-commonjs</code> in your <code>babel-loader</code> configuration. <a href="http://www.2ality.com/2015/12/webpack-tree-shaking.html">More details here</a>.</em></p>
