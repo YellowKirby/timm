@@ -2,7 +2,7 @@
 <html lang="en-us">
   <head>
     <meta charset="UTF-8">
-    <title>Timm by guigrpa</title>
+    <title>timm by guigrpa</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
@@ -11,7 +11,7 @@
   </head>
   <body>
     <section class="page-header">
-      <h1 class="project-name">Timm</h1>
+      <h1 class="project-name">timm</h1>
       <h2 class="project-tagline">Immutability helpers with fast reads and acceptable writes</h2>
       <a href="https://github.com/guigrpa/timm" class="btn">View on GitHub</a>
       <a href="https://github.com/guigrpa/timm/zipball/master" class="btn">Download .zip</a>
@@ -34,15 +34,17 @@
 <h2>
 <a id="motivation" class="anchor" href="#motivation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Motivation</h2>
 
-<p>I know, I know... the world does not need yet another immutability library, especially with the likes of <a href="http://facebook.github.io/immutable-js/">ImmutableJS</a> and <a href="https://github.com/rtfeldman/seamless-immutable">seamless-immutable</a> around. </p>
+<p>I know, I know... the world doesn't need yet another immutability library, especially with the likes of <a href="http://facebook.github.io/immutable-js/">ImmutableJS</a> and <a href="https://github.com/rtfeldman/seamless-immutable">seamless-immutable</a> around. </p>
 
-<p>And yet... I felt the urge, at least just to cover my limited needs. ImmutableJS is a solid, comprehensive and highly-performant solution, but this power comes at a price: mixing up ImmutableJS's Maps and Lists with your plain objects can cause some friction, and reading those objects (in my case, more often than writing them) is not that convenient.</p>
+<p>And yet... I felt the urge, at least just to cover my limited needs. ImmutableJS is a solid, comprehensive and highly-performant solution, but this power comes at a price: mixing up ImmutableJS's Maps and Lists with your plain objects can cause some friction, and reading those objects (in my case, more often than writing them) isn't that convenient.</p>
 
-<p>On the other side, seamless-immutable solves the "friction" problem by using plain objects and arrays, but seems to have some performance issues (at least in my benchmarks, see below).</p>
+<p>On the other side, <em>seamless-immutable</em> solves the "friction" problem by using plain objects and arrays, but seems to have some performance issues (at least in my benchmarks, see below).</p>
 
-<p>Timm's approach: use plain objects and arrays and provide simple mutation functions that will probably not handle all edge cases. It is by no means a complete solution, but it covers 100% of my use cases and maybe 90% of yours, too. Suggestions are welcome!</p>
+<p><em>timm</em>'s approach: use plain objects and arrays and provide simple mutation functions to handle most common operations (suggestions are welcome!). As a bonus, <em>timm</em> creates new objects <em>lazily</em>, when it confirms that the operation will mutate the input object; in other words, <strong>operations that don't modify an object always return the object itself</strong>. This alleviates pressure on the garbage collector and lets you easily check whether an object changed after an operation: <code>merge(obj, { a: 3 }) === obj</code>.</p>
 
-<p><strong>Important notice:</strong> Timm <em>does not</em> freeze the objects it provides. In other words, it doesn't protect you against inadvertently modifying them in your code. I considered deeply freezing all objects with <code>Object.freeze()</code>, but it is really slow. Then I considered doing this only in development, but then modifying frozen objects will silently fail in development (unless you <code>use strict</code> in your code), and –worse still– succeed in production. Not good. In conclusion, <strong>be careful</strong> (or send me any suggestion!).</p>
+<p><strong>Important notice:</strong> <em>timm</em> does <em>not</em> freeze the objects it provides. In other words, it doesn't protect you against inadvertently modifying them in your code. I considered deeply freezing all objects with <code>Object.freeze()</code>, but it is really slow. Then I considered doing this only in development (like <a href="https://github.com/rtfeldman/seamless-immutable#performance"><em>seamless-immutable</em></a>), but then modifying frozen objects will silently fail in development (unless you <code>use strict</code> in your code), and –worse still– succeed in production. Not good. In conclusion, <strong>be careful</strong> (or send me a suggestion to work around this!).</p>
+
+<p>...Oh, I almost forgot! It's <strong>tiny: just ~200 LOC and ~1.5 kB minified &amp; compressed!</strong></p>
 
 <h2>
 <a id="benchmarks" class="anchor" href="#benchmarks" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Benchmarks</h2>
@@ -51,22 +53,22 @@
 
 <ul>
 <li>In-place editing (mutable)</li>
-<li>ImmutableJS</li>
-<li>Timm</li>
-<li>Seamless-immutable</li>
+<li><a href="http://facebook.github.io/immutable-js/">ImmutableJS</a></li>
+<li><a href="https://github.com/guigrpa/timm">timm</a></li>
+<li><a href="https://github.com/rtfeldman/seamless-immutable">seamless-immutable</a></li>
 </ul>
 
-<p>All four solutions are first verified for consistency (the mutable solution obviously does not pass all tests) and then benchmarked. Benchmarks cover reading and writing object attributes at different nesting levels (root level, 2 levels and 5 levels deep), as well as replacing an object in a 1000-long array.</p>
+<p>All four solutions are first verified for consistency (the mutable solution obviously does not pass all tests) and then benchmarked. Benchmarks cover reading and writing object attributes at different nesting levels (root level, 2 levels and 5 levels deep), merging two small objects, and replacing an object in a 1000-long array.</p>
 
-<p>Feel free to run them yourself (download the repo and then <code>npm install &amp;&amp; npm run benchmarks</code>). These are my results on a Windows machine for 200k iterations:</p>
+<p>Feel free to run them yourself (download the repo and then <code>npm install &amp;&amp; npm run benchmarks</code>). These are my results on a Windows machine for 200k iterations (Node v6.2.0):</p>
 
-<p><img src="https://github.com/guigrpa/timm/blob/master/docs/benchmarks-win7-20160219.png?raw=true" alt="Benchmarks"></p>
+<p><img src="https://github.com/guigrpa/timm/blob/master/docs/benchmarks-win7-20160613.png?raw=true" alt="Benchmarks"></p>
 
 <p>Some conclusions from these benchmarks:</p>
 
 <ul>
-<li><p>Reads are on par with native objects/arrays and seamless-immutable, and faster than ImmutableJS (the deeper, the faster). In fact, you cannot go faster than native objects for reading!</p></li>
-<li><p>Writes are much slower than in-place edits, as expected, but are much faster than seamless-immutable (even in production mode), both for objects and arrays. Compared to ImmutableJS, object writes are faster (the deeper, the faster), whereas array writes are way slower. For timm and seamless-immutable, write times degrade linearly with array length (and probably object size), but much more slowly for ImmutableJS (logarithmically?). This is where ImmutableJS really shines.</p></li>
+<li><p>Reads are on par with native objects/arrays and <em>seamless-immutable</em>, and faster than <em>ImmutableJS</em> (the deeper, the faster). In fact, you cannot go faster than native objects for reading!</p></li>
+<li><p>Writes are much slower than in-place edits, as expected, but are much faster than <em>seamless-immutable</em> (even in production mode), both for objects and arrays. Compared to <em>ImmutableJS</em>, object writes and merges are faster (the deeper, the faster), whereas array writes are way slower (not as slow as <em>seamless-immutable</em>, though). For <em>timm</em> and <em>seamless-immutable</em>, write times degrade linearly with array length (and probably object size), but much more slowly for <em>ImmutableJS</em> (logarithmically?). This is where <em>ImmutableJS</em> really shines.</p></li>
 <li>
 <p>Hence, what I recommend (from top to bottom):</p>
 
@@ -87,14 +89,14 @@
 <a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h2>
 
 <div class="highlight highlight-source-js"><pre><span class="pl-c">// Consume the CommonJS ES5 module (default)</span>
-<span class="pl-k">import</span> {<span class="pl-smi">merge</span>} <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>timm<span class="pl-pds">'</span></span>;
-<span class="pl-k">const</span> <span class="pl-c1">obj</span> <span class="pl-k">=</span> <span class="pl-smi">timm</span>.<span class="pl-en">merge</span>({a<span class="pl-k">:</span> <span class="pl-c1">2</span>}, {b<span class="pl-k">:</span> <span class="pl-c1">3</span>});
+<span class="pl-k">import</span> { <span class="pl-smi">merge</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>timm<span class="pl-pds">'</span></span>;
+<span class="pl-k">const</span> <span class="pl-c1">obj</span> <span class="pl-k">=</span> <span class="pl-smi">timm</span>.<span class="pl-en">merge</span>({ a<span class="pl-k">:</span> <span class="pl-c1">2</span> }, { b<span class="pl-k">:</span> <span class="pl-c1">3</span> });
 
 <span class="pl-c">// Consume the native ES6 module (requires bundling)</span>
-<span class="pl-k">import</span> {<span class="pl-smi">merge</span>} <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>timm/lib/timm_es6<span class="pl-pds">'</span></span>;
-<span class="pl-k">const</span> <span class="pl-c1">obj</span> <span class="pl-k">=</span> <span class="pl-en">merge</span>({a<span class="pl-k">:</span> <span class="pl-c1">2</span>}, {b<span class="pl-k">:</span> <span class="pl-c1">3</span>});</pre></div>
+<span class="pl-k">import</span> { <span class="pl-smi">merge</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>timm/lib/timm_es6<span class="pl-pds">'</span></span>;
+<span class="pl-k">const</span> <span class="pl-c1">obj</span> <span class="pl-k">=</span> <span class="pl-en">merge</span>({ a<span class="pl-k">:</span> <span class="pl-c1">2</span> }, { b<span class="pl-k">:</span> <span class="pl-c1">3</span> });</pre></div>
 
-<p><em>Note: you can use the ES6 module version with Webpack 2 and its tree-shaking feature to get really small bundles, including just the Timm functions you use. Make sure you disable <code>babel-plugin-transform-es2015-modules-commonjs</code> in your <code>babel-loader</code> configuration. <a href="http://www.2ality.com/2015/12/webpack-tree-shaking.html">More details here</a>.</em></p>
+<p><em>Note: you can use the ES6 module version with Webpack 2 and its tree-shaking feature to get really small bundles, including just the timm functions you use. Make sure you disable <code>babel-plugin-transform-es2015-modules-commonjs</code> in your <code>babel-loader</code> configuration. <a href="http://www.2ality.com/2015/12/webpack-tree-shaking.html">More details here</a>.</em></p>
 
 <h3>
 <a id="arrays" class="anchor" href="#arrays" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Arrays</h3>
@@ -175,7 +177,7 @@ arr2 <span class="pl-k">=</span> <span class="pl-en">replaceAt</span>(arr, <span
 arr2 <span class="pl-k">===</span> arr
 <span class="pl-c">// false</span>
 
-<span class="pl-c">// ... but the same object is returned if there are no changes:</span>
+<span class="pl-c">// The same object is returned if there are no changes:</span>
 <span class="pl-en">replaceAt</span>(arr, <span class="pl-c1">1</span>, <span class="pl-s"><span class="pl-pds">'</span>b<span class="pl-pds">'</span></span>) <span class="pl-k">===</span> arr
 <span class="pl-c">// true</span></pre></div>
 
@@ -196,7 +198,7 @@ nested arrays and objects. If the path does not exist, it returns
 
 <p>Usage: <code>getIn(obj: ?ArrayOrObject, path: Array&lt;Key&gt;): any</code></p>
 
-<div class="highlight highlight-source-js"><pre>obj <span class="pl-k">=</span> {a<span class="pl-k">:</span> <span class="pl-c1">1</span>, b<span class="pl-k">:</span> <span class="pl-c1">2</span>, d<span class="pl-k">:</span> {d1<span class="pl-k">:</span> <span class="pl-c1">3</span>, d2<span class="pl-k">:</span> <span class="pl-c1">4</span>}, e<span class="pl-k">:</span> [<span class="pl-s"><span class="pl-pds">'</span>a<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>b<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>c<span class="pl-pds">'</span></span>]}
+<div class="highlight highlight-source-js"><pre>obj <span class="pl-k">=</span> { a<span class="pl-k">:</span> <span class="pl-c1">1</span>, b<span class="pl-k">:</span> <span class="pl-c1">2</span>, d<span class="pl-k">:</span> { d1<span class="pl-k">:</span> <span class="pl-c1">3</span>, d2<span class="pl-k">:</span> <span class="pl-c1">4</span> }, e<span class="pl-k">:</span> [<span class="pl-s"><span class="pl-pds">'</span>a<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>b<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>c<span class="pl-pds">'</span></span>] }
 <span class="pl-en">getIn</span>(obj, [<span class="pl-s"><span class="pl-pds">'</span>d<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>d1<span class="pl-pds">'</span></span>])
 <span class="pl-c">// 3</span>
 <span class="pl-en">getIn</span>(obj, [<span class="pl-s"><span class="pl-pds">'</span>e<span class="pl-pds">'</span></span>, <span class="pl-c1">1</span>])
@@ -211,13 +213,13 @@ the previous value, the original object is returned.</p>
 
 <p>Usage: <code>set(obj: ?ArrayOrObject, key: Key, val: any): ArrayOrObject</code></p>
 
-<div class="highlight highlight-source-js"><pre>obj <span class="pl-k">=</span> {a<span class="pl-k">:</span> <span class="pl-c1">1</span>, b<span class="pl-k">:</span> <span class="pl-c1">2</span>, c<span class="pl-k">:</span> <span class="pl-c1">3</span>}
+<div class="highlight highlight-source-js"><pre>obj <span class="pl-k">=</span> { a<span class="pl-k">:</span> <span class="pl-c1">1</span>, b<span class="pl-k">:</span> <span class="pl-c1">2</span>, c<span class="pl-k">:</span> <span class="pl-c1">3</span> }
 obj2 <span class="pl-k">=</span> <span class="pl-en">set</span>(obj, <span class="pl-s"><span class="pl-pds">'</span>b<span class="pl-pds">'</span></span>, <span class="pl-c1">5</span>)
-<span class="pl-c">// {a: 1, b: 5, c: 3}</span>
+<span class="pl-c">// { a: 1, b: 5, c: 3 }</span>
 obj2 <span class="pl-k">===</span> obj
 <span class="pl-c">// false</span>
 
-<span class="pl-c">// ... but the same object is returned if there are no changes:</span>
+<span class="pl-c">// The same object is returned if there are no changes:</span>
 <span class="pl-en">set</span>(obj, <span class="pl-s"><span class="pl-pds">'</span>b<span class="pl-pds">'</span></span>, <span class="pl-c1">2</span>) <span class="pl-k">===</span> obj
 <span class="pl-c">// true</span></pre></div>
 
@@ -237,9 +239,9 @@ the new value.</li>
 
 <p>Usage: <code>setIn(obj: ArrayOrObject, path: Array&lt;Key&gt;, val: any): ArrayOrObject</code></p>
 
-<div class="highlight highlight-source-js"><pre>obj <span class="pl-k">=</span> {a<span class="pl-k">:</span> <span class="pl-c1">1</span>, b<span class="pl-k">:</span> <span class="pl-c1">2</span>, d<span class="pl-k">:</span> {d1<span class="pl-k">:</span> <span class="pl-c1">3</span>, d2<span class="pl-k">:</span> <span class="pl-c1">4</span>}, e<span class="pl-k">:</span> {e1<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>foo<span class="pl-pds">'</span></span>, e2<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>bar<span class="pl-pds">'</span></span>}}
+<div class="highlight highlight-source-js"><pre>obj <span class="pl-k">=</span> { a<span class="pl-k">:</span> <span class="pl-c1">1</span>, b<span class="pl-k">:</span> <span class="pl-c1">2</span>, d<span class="pl-k">:</span> { d1<span class="pl-k">:</span> <span class="pl-c1">3</span>, d2<span class="pl-k">:</span> <span class="pl-c1">4</span> }, e<span class="pl-k">:</span> { e1<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>foo<span class="pl-pds">'</span></span>, e2<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>bar<span class="pl-pds">'</span></span> } }
 obj2 <span class="pl-k">=</span> <span class="pl-en">setIn</span>(obj, [<span class="pl-s"><span class="pl-pds">'</span>d<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>d1<span class="pl-pds">'</span></span>], <span class="pl-c1">4</span>)
-<span class="pl-c">// {a: 1, b: 2, d: {d1: 4, d2: 4}, e: {e1: 'foo', e2: 'bar'}}</span>
+<span class="pl-c">// { a: 1, b: 2, d: { d1: 4, d2: 4 }, e: { e1: 'foo', e2: 'bar' } }</span>
 obj2 <span class="pl-k">===</span> obj
 <span class="pl-c">// false</span>
 <span class="pl-smi">obj2</span>.<span class="pl-smi">d</span> <span class="pl-k">===</span> <span class="pl-smi">obj</span>.<span class="pl-smi">d</span>
@@ -247,9 +249,9 @@ obj2 <span class="pl-k">===</span> obj
 <span class="pl-smi">obj2</span>.<span class="pl-smi">e</span> <span class="pl-k">===</span> <span class="pl-smi">obj</span>.<span class="pl-smi">e</span>
 <span class="pl-c">// true</span>
 
-<span class="pl-c">// ... but the same object is returned if there are no changes:</span>
+<span class="pl-c">// The same object is returned if there are no changes:</span>
 obj3 <span class="pl-k">=</span> <span class="pl-en">setIn</span>(obj, [<span class="pl-s"><span class="pl-pds">'</span>d<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>d1<span class="pl-pds">'</span></span>], <span class="pl-c1">3</span>)
-<span class="pl-c">// {a: 1, b: 2, d: {d1: 3, d2: 4}, e: {e1: 'foo', e2: 'bar'}}</span>
+<span class="pl-c">// { a: 1, b: 2, d: { d1: 3, d2: 4 }, e: { e1: 'foo', e2: 'bar' } }</span>
 obj3 <span class="pl-k">===</span> obj
 <span class="pl-c">// true</span>
 <span class="pl-smi">obj3</span>.<span class="pl-smi">d</span> <span class="pl-k">===</span> <span class="pl-smi">obj</span>.<span class="pl-smi">d</span>
@@ -258,8 +260,8 @@ obj3 <span class="pl-k">===</span> obj
 <span class="pl-c">// true</span>
 
 <span class="pl-c">// ... unknown paths create intermediate keys:</span>
-<span class="pl-en">setIn</span>({a<span class="pl-k">:</span> <span class="pl-c1">3</span>}, [<span class="pl-s"><span class="pl-pds">'</span>unknown<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>path<span class="pl-pds">'</span></span>], <span class="pl-c1">4</span>)
-<span class="pl-c">// {a: 3, unknown: {path: 4}}</span></pre></div>
+<span class="pl-en">setIn</span>({ a<span class="pl-k">:</span> <span class="pl-c1">3</span> }, [<span class="pl-s"><span class="pl-pds">'</span>unknown<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>path<span class="pl-pds">'</span></span>], <span class="pl-c1">4</span>)
+<span class="pl-c">// { a: 3, unknown: { path: 4 } }</span></pre></div>
 
 <h4>
 <a id="updatein" class="anchor" href="#updatein" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>updateIn()</h4>
@@ -272,15 +274,15 @@ the previous value, the original object is returned.</p>
 <p>Usage: <code>updateIn(obj: ArrayOrObject, path: Array&lt;Key&gt;,
 fnUpdate: (prevValue: any) =&gt; any): ArrayOrObject</code></p>
 
-<div class="highlight highlight-source-js"><pre>obj <span class="pl-k">=</span> {a<span class="pl-k">:</span> <span class="pl-c1">1</span>, d<span class="pl-k">:</span> {d1<span class="pl-k">:</span> <span class="pl-c1">3</span>, d2<span class="pl-k">:</span> <span class="pl-c1">4</span>}}
-obj2 <span class="pl-k">=</span> <span class="pl-en">updateIn</span>(obj, [<span class="pl-s"><span class="pl-pds">'</span>d<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>d1<span class="pl-pds">'</span></span>], <span class="pl-k">function</span>(<span class="pl-smi">val</span>){<span class="pl-k">return</span> val <span class="pl-k">+</span> <span class="pl-c1">1</span>})
-<span class="pl-c">// {a: 1, d: {d1: 4, d2: 4}}</span>
+<div class="highlight highlight-source-js"><pre>obj <span class="pl-k">=</span> { a<span class="pl-k">:</span> <span class="pl-c1">1</span>, d<span class="pl-k">:</span> { d1<span class="pl-k">:</span> <span class="pl-c1">3</span>, d2<span class="pl-k">:</span> <span class="pl-c1">4</span> } }
+obj2 <span class="pl-k">=</span> <span class="pl-en">updateIn</span>(obj, [<span class="pl-s"><span class="pl-pds">'</span>d<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>d1<span class="pl-pds">'</span></span>], (<span class="pl-smi">val</span>) <span class="pl-k">=&gt;</span> val <span class="pl-k">+</span> <span class="pl-c1">1</span>)
+<span class="pl-c">// { a: 1, d: { d1: 4, d2: 4 } }</span>
 obj2 <span class="pl-k">===</span> obj
 <span class="pl-c">// false</span>
 
-<span class="pl-c">// ... but the same object is returned if there are no changes:</span>
-obj3 <span class="pl-k">=</span> <span class="pl-en">updateIn</span>(obj, [<span class="pl-s"><span class="pl-pds">'</span>d<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>d1<span class="pl-pds">'</span></span>], <span class="pl-k">function</span>(<span class="pl-smi">val</span>){<span class="pl-k">return</span> val})
-<span class="pl-c">// {a: 1, d: {d1: 3, d2: 4}}</span>
+<span class="pl-c">// The same object is returned if there are no changes:</span>
+obj3 <span class="pl-k">=</span> <span class="pl-en">updateIn</span>(obj, [<span class="pl-s"><span class="pl-pds">'</span>d<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>d1<span class="pl-pds">'</span></span>], (<span class="pl-smi">val</span>) <span class="pl-k">=&gt;</span> val)
+<span class="pl-c">// { a: 1, d: { d1: 3, d2: 4 } }</span>
 obj3 <span class="pl-k">===</span> obj
 <span class="pl-c">// true</span></pre></div>
 
@@ -313,15 +315,15 @@ corresponding attributes of <code>obj</code>
 </li>
 </ul>
 
-<div class="highlight highlight-source-js"><pre>obj1 <span class="pl-k">=</span> {a<span class="pl-k">:</span> <span class="pl-c1">1</span>, b<span class="pl-k">:</span> <span class="pl-c1">2</span>, c<span class="pl-k">:</span> <span class="pl-c1">3</span>}
-obj2 <span class="pl-k">=</span> {c<span class="pl-k">:</span> <span class="pl-c1">4</span>, d<span class="pl-k">:</span> <span class="pl-c1">5</span>}
+<div class="highlight highlight-source-js"><pre>obj1 <span class="pl-k">=</span> { a<span class="pl-k">:</span> <span class="pl-c1">1</span>, b<span class="pl-k">:</span> <span class="pl-c1">2</span>, c<span class="pl-k">:</span> <span class="pl-c1">3</span> }
+obj2 <span class="pl-k">=</span> { c<span class="pl-k">:</span> <span class="pl-c1">4</span>, d<span class="pl-k">:</span> <span class="pl-c1">5</span> }
 obj3 <span class="pl-k">=</span> <span class="pl-en">merge</span>(obj1, obj2)
-<span class="pl-c">// {a: 1, b: 2, c: 4, d: 5}</span>
+<span class="pl-c">// { a: 1, b: 2, c: 4, d: 5 }</span>
 obj3 <span class="pl-k">===</span> obj1
 <span class="pl-c">// false</span>
 
-<span class="pl-c">// ... but the same object is returned if there are no changes:</span>
-<span class="pl-en">merge</span>(obj1, {c<span class="pl-k">:</span> <span class="pl-c1">3</span>}) <span class="pl-k">===</span> obj1
+<span class="pl-c">// The same object is returned if there are no changes:</span>
+<span class="pl-en">merge</span>(obj1, { c<span class="pl-k">:</span> <span class="pl-c1">3</span> }) <span class="pl-k">===</span> obj1
 <span class="pl-c">// true</span></pre></div>
 
 <h4>
@@ -337,15 +339,32 @@ obj3 <span class="pl-k">===</span> obj1
 ...objects: Array&lt;?ArrayOrObject&gt;): ArrayOrObject</code></li>
 </ul>
 
-<div class="highlight highlight-source-js"><pre>obj1 <span class="pl-k">=</span> {a<span class="pl-k">:</span> <span class="pl-c1">1</span>, d<span class="pl-k">:</span> {b<span class="pl-k">:</span> {d1<span class="pl-k">:</span> <span class="pl-c1">3</span>, d2<span class="pl-k">:</span> <span class="pl-c1">4</span>}}}
-obj2 <span class="pl-k">=</span> {d3<span class="pl-k">:</span> <span class="pl-c1">5</span>}
-obj2 <span class="pl-k">=</span> <span class="pl-en">mergeIn</span>(obj1, [<span class="pl-s"><span class="pl-pds">'</span>d<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>b<span class="pl-pds">'</span></span>], obj2)
-<span class="pl-c">// {a: 1, d: {b: {d1: 3, d2: 4, d3: 5}}}</span>
+<div class="highlight highlight-source-js"><pre>obj1 <span class="pl-k">=</span> { a<span class="pl-k">:</span> <span class="pl-c1">1</span>, d<span class="pl-k">:</span> { b<span class="pl-k">:</span> { d1<span class="pl-k">:</span> <span class="pl-c1">3</span>, d2<span class="pl-k">:</span> <span class="pl-c1">4</span> } } }
+obj2 <span class="pl-k">=</span> { d3<span class="pl-k">:</span> <span class="pl-c1">5</span> }
+obj3 <span class="pl-k">=</span> <span class="pl-en">mergeIn</span>(obj1, [<span class="pl-s"><span class="pl-pds">'</span>d<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>b<span class="pl-pds">'</span></span>], obj2)
+<span class="pl-c">// { a: 1, d: { b: { d1: 3, d2: 4, d3: 5 } } }</span>
 obj3 <span class="pl-k">===</span> obj1
 <span class="pl-c">// false</span>
 
-<span class="pl-c">// ... but the same object is returned if there are no changes:</span>
-<span class="pl-en">mergeIn</span>(obj1, [<span class="pl-s"><span class="pl-pds">'</span>d<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>b<span class="pl-pds">'</span></span>], {d2<span class="pl-k">:</span> <span class="pl-c1">4</span>}) <span class="pl-k">===</span> obj1
+<span class="pl-c">// The same object is returned if there are no changes:</span>
+<span class="pl-en">mergeIn</span>(obj1, [<span class="pl-s"><span class="pl-pds">'</span>d<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>b<span class="pl-pds">'</span></span>], { d2<span class="pl-k">:</span> <span class="pl-c1">4</span> }) <span class="pl-k">===</span> obj1
+<span class="pl-c">// true</span></pre></div>
+
+<h4>
+<a id="omit" class="anchor" href="#omit" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>omit()</h4>
+
+<p>Returns an object excluding one or several attributes.</p>
+
+<p>Usage: <code>omit(obj: Object, attrs: Array&lt;string&gt;|string): Object</code></p>
+
+<div class="highlight highlight-source-js"><pre>obj <span class="pl-k">=</span> { a<span class="pl-k">:</span> <span class="pl-c1">1</span>, b<span class="pl-k">:</span> <span class="pl-c1">2</span>, c<span class="pl-k">:</span> <span class="pl-c1">3</span>, d<span class="pl-k">:</span> <span class="pl-c1">4</span> }
+<span class="pl-en">omit</span>(obj, <span class="pl-s"><span class="pl-pds">'</span>a<span class="pl-pds">'</span></span>)
+<span class="pl-c">// { b: 2, c: 3, d: 4 }</span>
+<span class="pl-en">omit</span>(obj, [<span class="pl-s"><span class="pl-pds">'</span>b<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>c<span class="pl-pds">'</span></span>])
+<span class="pl-c">// { a: 1, d: 4 }</span>
+
+<span class="pl-c">// The same object is returned if there are no changes:</span>
+<span class="pl-en">omit</span>(obj, <span class="pl-s"><span class="pl-pds">'</span>z<span class="pl-pds">'</span></span>) <span class="pl-k">===</span> obj1
 <span class="pl-c">// true</span></pre></div>
 
 <h4>
@@ -362,15 +381,15 @@ are filled in with the corresponding values from the second one
 <li><code>addDefaults(obj: ArrayOrObject, ...defaultObjects: Array&lt;?ArrayOrObject&gt;): ArrayOrObject</code></li>
 </ul>
 
-<div class="highlight highlight-source-js"><pre>obj1 <span class="pl-k">=</span> {a<span class="pl-k">:</span> <span class="pl-c1">1</span>, b<span class="pl-k">:</span> <span class="pl-c1">2</span>, c<span class="pl-k">:</span> <span class="pl-c1">3</span>}
-obj2 <span class="pl-k">=</span> {c<span class="pl-k">:</span> <span class="pl-c1">4</span>, d<span class="pl-k">:</span> <span class="pl-c1">5</span>, e<span class="pl-k">:</span> <span class="pl-c1">null</span>}
+<div class="highlight highlight-source-js"><pre>obj1 <span class="pl-k">=</span> { a<span class="pl-k">:</span> <span class="pl-c1">1</span>, b<span class="pl-k">:</span> <span class="pl-c1">2</span>, c<span class="pl-k">:</span> <span class="pl-c1">3</span> }
+obj2 <span class="pl-k">=</span> { c<span class="pl-k">:</span> <span class="pl-c1">4</span>, d<span class="pl-k">:</span> <span class="pl-c1">5</span>, e<span class="pl-k">:</span> <span class="pl-c1">null</span> }
 obj3 <span class="pl-k">=</span> <span class="pl-en">addDefaults</span>(obj1, obj2)
-<span class="pl-c">// {a: 1, b: 2, c: 3, d: 5, e: null}</span>
+<span class="pl-c">// { a: 1, b: 2, c: 3, d: 5, e: null }</span>
 obj3 <span class="pl-k">===</span> obj1
 <span class="pl-c">// false</span>
 
-<span class="pl-c">// ... but the same object is returned if there are no changes:</span>
-<span class="pl-en">addDefaults</span>(obj1, {c<span class="pl-k">:</span> <span class="pl-c1">4</span>}) <span class="pl-k">===</span> obj1
+<span class="pl-c">// The same object is returned if there are no changes:</span>
+<span class="pl-en">addDefaults</span>(obj1, { c<span class="pl-k">:</span> <span class="pl-c1">4</span> }) <span class="pl-k">===</span> obj1
 <span class="pl-c">// true</span></pre></div>
 
 <h2>
@@ -378,26 +397,14 @@ obj3 <span class="pl-k">===</span> obj1
 
 <p>Copyright (c) <a href="https://github.com/guigrpa">Guillermo Grau Panea</a> 2016</p>
 
-<p>Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
 
-<p>The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.</p>
+<p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
 
-<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.</p>
+<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
 
       <footer class="site-footer">
-        <span class="site-footer-owner"><a href="https://github.com/guigrpa/timm">Timm</a> is maintained by <a href="https://github.com/guigrpa">guigrpa</a>.</span>
+        <span class="site-footer-owner"><a href="https://github.com/guigrpa/timm">timm</a> is maintained by <a href="https://github.com/guigrpa">guigrpa</a>.</span>
 
         <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
       </footer>
