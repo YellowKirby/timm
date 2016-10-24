@@ -106,7 +106,7 @@
 
 <p>Returns a new array with an appended item or items.</p>
 
-<p>Usage: <code>addLast(array: Array&lt;any&gt;, val: Array&lt;any&gt;|any): Array&lt;any&gt;</code></p>
+<p>Usage: <code>addLast&lt;T&gt;(array: Array&lt;T&gt;, val: Array&lt;T&gt;|T): Array&lt;T&gt;</code></p>
 
 <div class="highlight highlight-source-js"><pre>arr <span class="pl-k">=</span> [<span class="pl-s"><span class="pl-pds">'</span>a<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>b<span class="pl-pds">'</span></span>]
 arr2 <span class="pl-k">=</span> <span class="pl-en">addLast</span>(arr, <span class="pl-s"><span class="pl-pds">'</span>c<span class="pl-pds">'</span></span>)
@@ -121,7 +121,7 @@ arr3 <span class="pl-k">=</span> <span class="pl-en">addLast</span>(arr, [<span 
 
 <p>Returns a new array with a prepended item or items.</p>
 
-<p>Usage: <code>addFirst(array: Array&lt;any&gt;, val: Array&lt;any&gt;|any): Array&lt;any&gt;</code></p>
+<p>Usage: <code>addFirst&lt;T&gt;(array: Array&lt;T&gt;, val: Array&lt;T&gt;|T): Array&lt;T&gt;</code></p>
 
 <div class="highlight highlight-source-js"><pre>arr <span class="pl-k">=</span> [<span class="pl-s"><span class="pl-pds">'</span>a<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>b<span class="pl-pds">'</span></span>]
 arr2 <span class="pl-k">=</span> <span class="pl-en">addFirst</span>(arr, <span class="pl-s"><span class="pl-pds">'</span>c<span class="pl-pds">'</span></span>)
@@ -132,12 +132,48 @@ arr3 <span class="pl-k">=</span> <span class="pl-en">addFirst</span>(arr, [<span
 <span class="pl-c">// ['c', 'd', 'a', 'b']</span></pre></div>
 
 <h4>
+<a id="removelast" class="anchor" href="#removelast" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>removeLast()</h4>
+
+<p>Returns a new array removing the last item.</p>
+
+<p>Usage: <code>removeLast&lt;T&gt;(array: Array&lt;T&gt;): Array&lt;T&gt;</code></p>
+
+<div class="highlight highlight-source-js"><pre>arr <span class="pl-k">=</span> [<span class="pl-s"><span class="pl-pds">'</span>a<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>b<span class="pl-pds">'</span></span>]
+arr2 <span class="pl-k">=</span> <span class="pl-en">removeLast</span>(arr)
+<span class="pl-c">// ['a']</span>
+arr2 <span class="pl-k">===</span> arr
+<span class="pl-c">// false</span>
+
+<span class="pl-c">// The same array is returned if there are no changes:</span>
+arr3 <span class="pl-k">=</span> []
+<span class="pl-en">removeLast</span>(arr3) <span class="pl-k">===</span> arr3
+<span class="pl-c">// true</span></pre></div>
+
+<h4>
+<a id="removefirst" class="anchor" href="#removefirst" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>removeFirst()</h4>
+
+<p>Returns a new array removing the first item.</p>
+
+<p>Usage: <code>removeFirst&lt;T&gt;(array: Array&lt;T&gt;): Array&lt;T&gt;</code></p>
+
+<div class="highlight highlight-source-js"><pre>arr <span class="pl-k">=</span> [<span class="pl-s"><span class="pl-pds">'</span>a<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>b<span class="pl-pds">'</span></span>]
+arr2 <span class="pl-k">=</span> <span class="pl-en">removeFirst</span>(arr)
+<span class="pl-c">// ['b']</span>
+arr2 <span class="pl-k">===</span> arr
+<span class="pl-c">// false</span>
+
+<span class="pl-c">// The same array is returned if there are no changes:</span>
+arr3 <span class="pl-k">=</span> []
+<span class="pl-en">removeFirst</span>(arr3) <span class="pl-k">===</span> arr3
+<span class="pl-c">// true</span></pre></div>
+
+<h4>
 <a id="insert" class="anchor" href="#insert" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>insert()</h4>
 
 <p>Returns a new array obtained by inserting an item or items
 at a specified index.</p>
 
-<p>Usage: <code>insert(array: Array&lt;any&gt;, idx: number, val: Array&lt;any&gt;|any): Array&lt;any&gt;</code></p>
+<p>Usage: <code>insert&lt;T&gt;(array: Array&lt;T&gt;, idx: number, val: Array&lt;T&gt;|T): Array&lt;T&gt;</code></p>
 
 <div class="highlight highlight-source-js"><pre>arr <span class="pl-k">=</span> [<span class="pl-s"><span class="pl-pds">'</span>a<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>b<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>c<span class="pl-pds">'</span></span>]
 arr2 <span class="pl-k">=</span> <span class="pl-en">insert</span>(arr, <span class="pl-c1">1</span>, <span class="pl-s"><span class="pl-pds">'</span>d<span class="pl-pds">'</span></span>)
@@ -153,13 +189,17 @@ arr2 <span class="pl-k">===</span> arr
 <p>Returns a new array obtained by removing an item at
 a specified index.</p>
 
-<p>Usage: <code>removeAt(array: Array&lt;any&gt;, idx: number): Array&lt;any&gt;</code></p>
+<p>Usage: <code>removeAt&lt;T&gt;(array: Array&lt;T&gt;, idx: number): Array&lt;T&gt;</code></p>
 
 <div class="highlight highlight-source-js"><pre>arr <span class="pl-k">=</span> [<span class="pl-s"><span class="pl-pds">'</span>a<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>b<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>c<span class="pl-pds">'</span></span>]
 arr2 <span class="pl-k">=</span> <span class="pl-en">removeAt</span>(arr, <span class="pl-c1">1</span>)
 <span class="pl-c">// ['a', 'c']</span>
 arr2 <span class="pl-k">===</span> arr
-<span class="pl-c">// false</span></pre></div>
+<span class="pl-c">// false</span>
+
+<span class="pl-c">// The same array is returned if there are no changes:</span>
+<span class="pl-en">removeAt</span>(arr, <span class="pl-c1">4</span>) <span class="pl-k">===</span> arr
+<span class="pl-c">// true</span></pre></div>
 
 <h4>
 <a id="replaceat" class="anchor" href="#replaceat" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>replaceAt()</h4>
@@ -169,7 +209,7 @@ a specified index. If the provided item is the same
 (<em>referentially equal to</em>) the previous item at that position,
 the original array is returned.</p>
 
-<p>Usage: <code>replaceAt(array: Array&lt;any&gt;, idx: number, newItem: any): Array&lt;any&gt;</code></p>
+<p>Usage: <code>replaceAt&lt;T&gt;(array: Array&lt;T&gt;, idx: number, newItem: T): Array&lt;T&gt;</code></p>
 
 <div class="highlight highlight-source-js"><pre>arr <span class="pl-k">=</span> [<span class="pl-s"><span class="pl-pds">'</span>a<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>b<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>c<span class="pl-pds">'</span></span>]
 arr2 <span class="pl-k">=</span> <span class="pl-en">replaceAt</span>(arr, <span class="pl-c1">1</span>, <span class="pl-s"><span class="pl-pds">'</span>d<span class="pl-pds">'</span></span>)
@@ -211,7 +251,7 @@ nested arrays and objects. If the path does not exist, it returns
 If the provided value is the same (<em>referentially equal to</em>)
 the previous value, the original object is returned.</p>
 
-<p>Usage: <code>set(obj: ?ArrayOrObject, key: Key, val: any): ArrayOrObject</code></p>
+<p>Usage: <code>set&lt;T&gt;(obj: ?T, key: Key, val: any): T</code></p>
 
 <div class="highlight highlight-source-js"><pre>obj <span class="pl-k">=</span> { a<span class="pl-k">:</span> <span class="pl-c1">1</span>, b<span class="pl-k">:</span> <span class="pl-c1">2</span>, c<span class="pl-k">:</span> <span class="pl-c1">3</span> }
 obj2 <span class="pl-k">=</span> <span class="pl-en">set</span>(obj, <span class="pl-s"><span class="pl-pds">'</span>b<span class="pl-pds">'</span></span>, <span class="pl-c1">5</span>)
@@ -237,7 +277,7 @@ the previous value, the original object is returned.</li>
 the new value.</li>
 </ul>
 
-<p>Usage: <code>setIn(obj: ArrayOrObject, path: Array&lt;Key&gt;, val: any): ArrayOrObject</code></p>
+<p>Usage: <code>setIn&lt;T: ArrayOrObject&gt;(obj: T, path: Array&lt;Key&gt;, val: any): T</code></p>
 
 <div class="highlight highlight-source-js"><pre>obj <span class="pl-k">=</span> { a<span class="pl-k">:</span> <span class="pl-c1">1</span>, b<span class="pl-k">:</span> <span class="pl-c1">2</span>, d<span class="pl-k">:</span> { d1<span class="pl-k">:</span> <span class="pl-c1">3</span>, d2<span class="pl-k">:</span> <span class="pl-c1">4</span> }, e<span class="pl-k">:</span> { e1<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>foo<span class="pl-pds">'</span></span>, e2<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>bar<span class="pl-pds">'</span></span> } }
 obj2 <span class="pl-k">=</span> <span class="pl-en">setIn</span>(obj, [<span class="pl-s"><span class="pl-pds">'</span>d<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>d1<span class="pl-pds">'</span></span>], <span class="pl-c1">4</span>)
@@ -271,8 +311,8 @@ calculated via a user-provided callback based on the current value.
 If the calculated value is the same (<em>referentially equal to</em>)
 the previous value, the original object is returned.</p>
 
-<p>Usage: <code>updateIn(obj: ArrayOrObject, path: Array&lt;Key&gt;,
-fnUpdate: (prevValue: any) =&gt; any): ArrayOrObject</code></p>
+<p>Usage: <code>updateIn&lt;T: ArrayOrObject&gt;(obj: T, path: Array&lt;Key&gt;,
+fnUpdate: (prevValue: any) =&gt; any): T</code></p>
 
 <div class="highlight highlight-source-js"><pre>obj <span class="pl-k">=</span> { a<span class="pl-k">:</span> <span class="pl-c1">1</span>, d<span class="pl-k">:</span> { d1<span class="pl-k">:</span> <span class="pl-c1">3</span>, d2<span class="pl-k">:</span> <span class="pl-c1">4</span> } }
 obj2 <span class="pl-k">=</span> <span class="pl-en">updateIn</span>(obj, [<span class="pl-s"><span class="pl-pds">'</span>d<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>d1<span class="pl-pds">'</span></span>], (<span class="pl-smi">val</span>) <span class="pl-k">=&gt;</span> val <span class="pl-k">+</span> <span class="pl-c1">1</span>)
@@ -296,8 +336,8 @@ Similar to <code>Object.assign()</code>, but immutable.</p>
 <p>Usage:</p>
 
 <ul>
-<li><code>merge(obj1: ArrayOrObject, obj2: ?ArrayOrObject): ArrayOrObject</code></li>
-<li><code>merge(obj1: ArrayOrObject, ...objects: Array&lt;?ArrayOrObject&gt;): ArrayOrObject</code></li>
+<li><code>merge(obj1: Object, obj2: ?Object): Object</code></li>
+<li><code>merge(obj1: Object, ...objects: Array&lt;?Object&gt;): Object</code></li>
 </ul>
 
 <p>The unmodified <code>obj1</code> is returned if <code>obj2</code> does not <em>provide something
@@ -329,14 +369,15 @@ obj3 <span class="pl-k">===</span> obj1
 <h4>
 <a id="mergein" class="anchor" href="#mergein" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>mergeIn()</h4>
 
-<p>Similar to <code>merge()</code>, but merging the value at a given nested path.</p>
+<p>Similar to <code>merge()</code>, but merging the value at a given nested path.
+Note that the returned type is the same as that of the first argument.</p>
 
 <p>Usage:</p>
 
 <ul>
-<li><code>mergeIn(obj1: ArrayOrObject, path: Array&lt;Key&gt;, obj2: ArrayOrObject): ArrayOrObject</code></li>
-<li><code>mergeIn(obj1: ArrayOrObject, path: Array&lt;Key&gt;,
-...objects: Array&lt;?ArrayOrObject&gt;): ArrayOrObject</code></li>
+<li><code>mergeIn&lt;T: ArrayOrObject&gt;(obj1: T, path: Array&lt;Key&gt;, obj2: ?Object): T</code></li>
+<li><code>mergeIn&lt;T: ArrayOrObject&gt;(obj1: T, path: Array&lt;Key&gt;,
+...objects: Array&lt;?Object&gt;): T</code></li>
 </ul>
 
 <div class="highlight highlight-source-js"><pre>obj1 <span class="pl-k">=</span> { a<span class="pl-k">:</span> <span class="pl-c1">1</span>, d<span class="pl-k">:</span> { b<span class="pl-k">:</span> { d1<span class="pl-k">:</span> <span class="pl-c1">3</span>, d2<span class="pl-k">:</span> <span class="pl-c1">4</span> } } }
@@ -377,8 +418,8 @@ are filled in with the corresponding values from the second one
 <p>Usage:</p>
 
 <ul>
-<li><code>addDefaults(obj: ArrayOrObject, defaults: ArrayOrObject): ArrayOrObject</code></li>
-<li><code>addDefaults(obj: ArrayOrObject, ...defaultObjects: Array&lt;?ArrayOrObject&gt;): ArrayOrObject</code></li>
+<li><code>addDefaults(obj: Object, defaults: Object): Object</code></li>
+<li><code>addDefaults(obj: Object, ...defaultObjects: Array&lt;?Object&gt;): Object</code></li>
 </ul>
 
 <div class="highlight highlight-source-js"><pre>obj1 <span class="pl-k">=</span> { a<span class="pl-k">:</span> <span class="pl-c1">1</span>, b<span class="pl-k">:</span> <span class="pl-c1">2</span>, c<span class="pl-k">:</span> <span class="pl-c1">3</span> }
